@@ -2,7 +2,25 @@ import { type ClassValue, clsx } from 'clsx';
 import { toast } from 'svelte-sonner';
 import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
+import type { AuthProviderInfo } from 'pocketbase';
 import type { TransitionConfig } from 'svelte/transition';
+
+export const compareProviders = (
+	a: AuthProviderInfo,
+	b: AuthProviderInfo,
+	compareList: string[]
+) => {
+	const aIndex = compareList.indexOf(a.name) + 1;
+	const bIndex = compareList.indexOf(b.name) + 1;
+
+	return (aIndex > 0 ? aIndex : 0) - (bIndex > 0 ? bIndex : 0);
+};
+
+export const sortProviders = (providers: AuthProviderInfo[], compareList: string[]) => {
+	compareList.reverse();
+	providers.sort((a, b) => compareProviders(a, b, compareList));
+	providers.reverse();
+};
 
 export const answer = (data: any, status = 200) => {
 	return new Response(JSON.stringify(data), {
