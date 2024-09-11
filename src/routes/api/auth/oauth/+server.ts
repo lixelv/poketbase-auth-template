@@ -20,9 +20,7 @@ export const POST = async ({ locals, url, cookies, request }) => {
 	const verifier = currentAuthProvider.codeVerifier;
 
 	cookies.set('provider', currentProvider, { path: '/' });
-
 	cookies.set('oauth_state', state, { path: '/' });
-
 	cookies.set('oauth_verifier', verifier, { path: '/' });
 
 	return answer(

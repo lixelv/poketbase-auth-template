@@ -3,7 +3,7 @@
 	import { browser } from '$app/environment';
 
 	if (browser) {
-		window.location.href = '/';
+		window.location.reload();
 	}
 </script>
 

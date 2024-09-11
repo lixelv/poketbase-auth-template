@@ -3,7 +3,6 @@
 	import * as Card from '$lib/components/ui/card';
 
 	import { post } from '$lib/utils';
-	import { browser } from '$app/environment';
 
 	export let data: { user: any };
 </script>

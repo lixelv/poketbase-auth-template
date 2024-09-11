@@ -9,26 +9,19 @@ export const load = async ({ locals, url, cookies }) => {
 	const state = decodeURI(url.searchParams.get('state') || '');
 	const code = decodeURI(url.searchParams.get('code') || '');
 
-	console.log('Provider', code, state);
-
 	const authMethods = await locals.pb.collection('users').listAuthMethods();
-	const currentAuthProvider = authMethods.authProviders.filter(
+	const currentAuthProvider = authMethods.authProviders.find(
 		(provider) => provider.name === selectedProvider
-	)[0];
-
-	if (!currentAuthProvider) {
-		console.log('No auth providers (for some reason)');
-		throw redirect(302, '/auth/signup');
-	}
+	);
 
 	if (!currentAuthProvider) {
 		console.log('No auth providers');
-		throw redirect(302, '/auth/signup');
+		throw redirect(302, '/auth/login');
 	}
 
 	if (state !== expectedState) {
 		console.log('Invalid state', state, expectedState);
-		throw redirect(302, '/auth/signup');
+		throw redirect(302, '/auth/login');
 	}
 
 	try {
@@ -43,6 +36,10 @@ export const load = async ({ locals, url, cookies }) => {
 					name: 'currentBody'
 				}
 			);
+
+		cookies.delete('provider', { path: '/' });
+		cookies.delete('oauth_state', { path: '/' });
+		cookies.delete('oauth_verifier', { path: '/' });
 	} catch (err) {
 		console.log('Fuck!', err);
 	}

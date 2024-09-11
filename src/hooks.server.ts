@@ -2,6 +2,7 @@ import { admin } from '$lib/pocketbase/server';
 import { createPb } from '$lib/pocketbase';
 import { toPOJO } from '$lib/utils';
 import type { Handle } from '@sveltejs/kit';
+import type { UsersResponse } from '$lib/types';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.admin = admin;
@@ -13,7 +14,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	await event.locals.pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '');
 
 	if (event.locals.pb.authStore.isValid) {
-		event.locals.user = toPOJO(event.locals.pb.authStore.model);
+		event.locals.user = toPOJO(event.locals.pb.authStore.model as UsersResponse);
 	} else {
 		event.locals.user = undefined;
 	}

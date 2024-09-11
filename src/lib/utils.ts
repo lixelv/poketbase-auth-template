@@ -88,8 +88,8 @@ export const post = async (url: string, data: any = {}) => {
 	return { status: response.status, data: await response.json() };
 };
 
-export const toPOJO = (obj: any) => {
-	return JSON.parse(JSON.stringify(obj));
+export const toPOJO = <T>(obj: T): T | undefined => {
+	return obj ? JSON.parse(JSON.stringify(obj)) : undefined;
 };
 
 export function cn(...inputs: ClassValue[]) {
