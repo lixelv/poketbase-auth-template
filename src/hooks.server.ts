@@ -19,21 +19,21 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.locals.user = undefined;
 	}
 
-	console.log('Endpoint', event.request.url);
-	console.log('Before', event.locals.pb.authStore.model);
+	// console.log('Endpoint', event.request.url);
+	// console.log('Before', event.locals.pb.authStore.model);
 
 	const response = await resolve(event);
 
-	console.log('After', event.locals.pb.authStore.model);
+	// console.log('After', event.locals.pb.authStore.model);
 
 	response.headers.append(
 		'set-cookie',
 		event.locals.pb.authStore.exportToCookie({ httpOnly: false, secure: false })
 	);
 
-	console.log('Cookies', event.locals.pb.authStore.exportToCookie());
+	// console.log('Cookies', event.locals.pb.authStore.exportToCookie());
 
-	console.log('Real cookies', response.headers.get('set-cookie'));
+	// console.log('Real cookies', response.headers.get('set-cookie'));
 
 	return response;
 };

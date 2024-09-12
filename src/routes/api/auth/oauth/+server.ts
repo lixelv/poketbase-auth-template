@@ -7,7 +7,7 @@ export const POST = async ({ locals, url, cookies, request }) => {
 	if (!providers) {
 		return answer({ code: 403, message: 'Something went wrong :(' }, 403);
 	} else {
-		console.log(providers);
+		// console.log(providers);
 	}
 
 	const redirectUrl = `${url.origin}/auth/oauth`;
